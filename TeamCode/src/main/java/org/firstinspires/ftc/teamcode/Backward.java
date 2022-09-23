@@ -50,7 +50,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Forward", group="Linear Opmode")
+@TeleOp(name="Backward", group="Linear Opmode")
 @Disabled
 public class Backward extends LinearOpMode {
 
