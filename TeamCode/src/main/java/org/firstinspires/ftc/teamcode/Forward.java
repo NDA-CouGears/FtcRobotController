@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Forward", group="Linear Opmode")
-@Disabled
+
 public class Forward extends LinearOpMode {
 
     // Declare OpMode members.
@@ -60,8 +60,11 @@ public class Forward extends LinearOpMode {
     //private DcMotor leftDrive = null;
     //private DcMotor rightDrive = null;
 
-    DcMotor leftmotor;
-    DcMotor rightmotor;
+    DcMotor leftfrontmotor;
+    DcMotor rightfrontmotor;
+    DcMotor rightbackmotor;
+    DcMotor leftbackmotor;
+
 
     double power = 0.5;
 
@@ -70,22 +73,45 @@ public class Forward extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        leftmotor = hardwareMap.dcMotor.get("Left_Motor");
-        rightmotor = hardwareMap.dcMotor.get("Right_Motor");
+        leftfrontmotor = hardwareMap.dcMotor.get("left_front_drive");
+        rightfrontmotor = hardwareMap.dcMotor.get("right_front_drive");
+        leftbackmotor = hardwareMap.dcMotor.get("left_back_drive");
+        rightbackmotor = hardwareMap.dcMotor.get("right_back_drive");
 
-        leftmotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftfrontmotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
 
-        leftmotor.setPower(power);
-        rightmotor.setPower(power);
+
 
         sleep(2000);
 
         power = 0.0;
 
-        leftmotor.setPower(power);
-        rightmotor.setPower(power);
+        leftfrontmotor.setPower(1);
+        rightfrontmotor.setPower(1);
+        leftbackmotor.setPower(1);
+        rightbackmotor.setPower(1);
+        sleep(2000);
+
+        leftfrontmotor.setPower(-0.5);
+        rightfrontmotor.setPower(0.5);
+        leftbackmotor.setPower(-0.5);
+        rightbackmotor.setPower(0.5);
+        sleep(2000);
+
+        leftfrontmotor.setPower(-1);
+        rightfrontmotor.setPower(-1);
+        leftbackmotor.setPower(-1);
+        rightbackmotor.setPower(-1);
+        sleep(2000);
+
+        leftfrontmotor.setPower(-1);
+        rightfrontmotor.setPower(1);
+        leftbackmotor.setPower(-1);
+        rightbackmotor.setPower(1);
+        sleep(2000);
+
         }
 }
