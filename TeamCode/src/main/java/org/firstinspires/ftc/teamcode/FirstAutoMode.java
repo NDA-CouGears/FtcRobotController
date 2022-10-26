@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name="First Auto Mode", group="Autonomous")
 public class FirstAutoMode extends LinearOpMode {
 
+    // hello hello hello this is a test
     // member variables
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftFrontDrive = null;
