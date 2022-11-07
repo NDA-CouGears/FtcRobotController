@@ -71,10 +71,6 @@ public class Claw extends LinearOpMode {
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
 
-    boolean leftBumper = gamepad2.left_bumper;
-    boolean rightBumper = gamepad2.right_bumper;
-
-
     Servo claw;
 
 
@@ -84,26 +80,32 @@ public class Claw extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
 
-        claw = hardwareMap.servo.get("servo");
+        claw = hardwareMap.servo.get("servo3");
+        claw.resetDeviceConfigurationForOpMode();
 
         boolean leftBumper = gamepad2.left_bumper;
         boolean rightBumper = gamepad2.right_bumper;
 
-        if(leftBumper) {
-            claw.setPosition(1);
-        }
-
-        if(rightBumper)
-        {
-            claw.setPosition(0);
-        }
-
-        // Wait for the game to start (driver presses PLAY)
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
         waitForStart();
         runtime.reset();
+
+        while (opModeIsActive()) {
+
+            if (gamepad2.left_bumper) {
+                claw.setPosition(0.75);
+                sleep(2000);
+                claw.setPosition(1);
+            }
+
+            if (gamepad2.right_bumper) {
+                claw.setPosition(0);
+            }
+
+            // Wait for the game to start (driver presses PLAY)
+            telemetry.addData("Status", "Initialized");
+            telemetry.update();
+
+        }
 
 
 
