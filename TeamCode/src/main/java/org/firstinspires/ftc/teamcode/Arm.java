@@ -72,7 +72,7 @@ public class Arm extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     Servo claw;
-    Servo servo1;
+    Servo servo;
     Servo servo2;
 
 
@@ -82,18 +82,18 @@ public class Arm extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
 
-        servo1 = hardwareMap.servo.get("servo1");
+        servo = hardwareMap.servo.get("servo");
         servo2 = hardwareMap.servo.get("servo2");
 
-        if (servo1.getController() instanceof ServoControllerEx)
+        if (servo.getController() instanceof ServoControllerEx)
         {
-            ServoControllerEx theControl = (ServoControllerEx) servo1.getController();
-            int portNum = servo1.getPortNumber();
+            ServoControllerEx theControl = (ServoControllerEx) servo.getController();
+            int portNum = servo.getPortNumber();
             PwmControl.PwmRange range = new PwmControl.PwmRange(553,2500);
             theControl.setServoPwmRange(portNum,range);
         }
 
-       double curArmPosition = 50;
+       double curArmPosition = 10;
         waitForStart();
 
 
@@ -107,11 +107,11 @@ public class Arm extends LinearOpMode {
                 curArmPosition = 100;
             }
 
-            else if (curArmPosition <= 50 ) {
-                curArmPosition = 50;
+            else if (curArmPosition <= 10 ) {
+                curArmPosition = 20;
             }
 
-            servo1.setPosition(curArmPosition/100);
+            servo.setPosition(curArmPosition/100);
 
             // Wait for the game to start (driver presses PLAY)
             telemetry.addData("Current Position: ", curArmPosition);
