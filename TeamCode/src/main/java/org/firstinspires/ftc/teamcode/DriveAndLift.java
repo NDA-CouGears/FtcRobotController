@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-@TeleOp(name="Drive and Lift", group="TeleOp")
+@TeleOp(name="Drive and Lift1", group="TeleOp")
 public class DriveAndLift extends LinearOpMode {
 
     // initialize narrators
@@ -72,7 +72,7 @@ public class DriveAndLift extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, this is reversed!
+            double y = gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
             double deltaY = -gamepad2.left_stick_y;
@@ -89,8 +89,8 @@ public class DriveAndLift extends LinearOpMode {
             }
             servo.setPosition(curArmPosition/100);
 
-            if (curArmPosition2 > 50) {
-                curArmPosition2 = 50;
+            if (curArmPosition2 > 60) {
+                curArmPosition2 = 60;
             }
             else if (curArmPosition2 < 3) {
                 curArmPosition2 = 3;

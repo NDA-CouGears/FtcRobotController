@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Forward", group="Linear Opmode")
-
+@Disabled
 public class Forward extends LinearOpMode {
 
     // Declare OpMode members.
