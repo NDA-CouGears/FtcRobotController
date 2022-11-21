@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-@TeleOp(name="Robot Centric Mecanum", group="TeleOp")
+@TeleOp(name="Drive and Lift", group="TeleOp")
 public class DriveAndLift extends LinearOpMode {
 
     // initialize narrators
@@ -99,7 +99,7 @@ public class DriveAndLift extends LinearOpMode {
 
             if (gamepad2.left_bumper) {
                 claw.setPosition(0.75);
-                sleep(1500);
+                sleep(750);
                 claw.setPosition(1);
             }
 
