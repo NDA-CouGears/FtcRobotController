@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-@TeleOp(name="Drive and Lift1", group="TeleOp")
+@TeleOp(name="Drive and Lift", group="TeleOp")
 public class DriveAndLift extends LinearOpMode {
 
     // initialize narrators
@@ -30,6 +30,14 @@ public class DriveAndLift extends LinearOpMode {
     static final double DRIVE_GEAR_REDUCTION = 1.0;
     static final double WHEEL_DIAMETER_MM = 37.0;
     static final double COUNTS_PER_MOTOR_REV = 1440;
+    static final double middleServo = 55;
+    static final double middleServo2= 30;
+    static final double topServo = 67;
+    static final double topServo2 = 57;
+    static final double servoMax = 69;
+    static final double servo2Max = 60;
+    static final double servoMin = 31;
+    static final double servo2Min = 3;
 
     @Override
     public void runOpMode() {
@@ -78,28 +86,54 @@ public class DriveAndLift extends LinearOpMode {
             double deltaY = -gamepad2.left_stick_y;
             double deltaY2 = -gamepad2.right_stick_y;
 
+            if (gamepad2.b)
+            {
+                curArmPosition = middleServo;
+                curArmPosition2 = middleServo2;
+            }
+
+            if (gamepad2.y)
+            {
+                curArmPosition = topServo;
+                curArmPosition2 = topServo2;
+            }
+
+            if (gamepad2.a)
+            {
+                curArmPosition = servoMin;
+                curArmPosition2 = servo2Min;
+                claw.setPosition(1);
+            }
+
+            if (gamepad2.x)
+            {
+                curArmPosition -= 7.5;
+                curArmPosition2 -= 7.5;
+                sleep(1000);
+                claw.setPosition(1);
+            }
+
             curArmPosition2 += deltaY2*0.1;
             curArmPosition += deltaY*0.1;
 
-            if (curArmPosition > 69) {
-                curArmPosition = 69;
+            if (curArmPosition > servoMax) {
+                curArmPosition = servoMax;
             }
-            else if (curArmPosition < 31 ) {
-                curArmPosition = 31;
+            else if (curArmPosition < servoMin ) {
+                curArmPosition = servoMin;
             }
-            servo.setPosition(curArmPosition/100);
 
-            if (curArmPosition2 > 60) {
-                curArmPosition2 = 60;
+            if (curArmPosition2 > servo2Max) {
+                curArmPosition2 = servo2Max;
             }
-            else if (curArmPosition2 < 3) {
-                curArmPosition2 = 3;
+            else if (curArmPosition2 < servo2Min) {
+                curArmPosition2 = servo2Min;
             }
+
+            servo.setPosition(curArmPosition/100);
             servo2.setPosition(curArmPosition2/100);
 
             if (gamepad2.left_bumper) {
-                claw.setPosition(0.75);
-                sleep(750);
                 claw.setPosition(1);
             }
 
