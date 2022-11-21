@@ -51,6 +51,7 @@ import java.util.List;
  * is explained below.
  */
 @TeleOp(name = "camera that works", group = "Concept")
+
 public  class NewCameraPleaseWork extends LinearOpMode {
 
     /*
