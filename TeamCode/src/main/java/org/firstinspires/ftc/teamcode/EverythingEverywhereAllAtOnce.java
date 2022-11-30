@@ -121,7 +121,6 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
     public void encoderDriveRight(double speed,
                              double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches,
                              double timeoutS,DcMotor lfd, DcMotor lbd, DcMotor rfd, DcMotor rbd) {
-        telemetry.addLine("i want to die");
         telemetry.update();
         sleep(100000);
 
@@ -209,7 +208,6 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
     public void encoderDrive1(double speed,
                              double leftInches, double rightInches,
                              double timeoutS,DcMotor lfd, DcMotor lbd, DcMotor rfd, DcMotor rbd) {
-        telemetry.addLine("i am struggling");
         telemetry.update();
         sleep(100000);
 
@@ -378,7 +376,7 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
                             double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
 
                             telemetry.addData(""," ");
-                            telemetry.addData("help me Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
+                            telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
                             telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
                             telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
                             image = recognition.getLabel();
@@ -429,22 +427,42 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
     @Override
     public void runOpMode() {
         
-        telemetry.addLine("i am struggling");
         telemetry.update();
 
         DcMotor leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
         DcMotor leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         DcMotor rightFrontDrive  = hardwareMap.get(DcMotor.class, "right_front_drive");
         DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
-        telemetry.addData("hello hello hello"," ");
         telemetry.update();
         waitForStart();
         String imageKey = cameraResult();
 
-        switch (imageKey) {
+        while(true)
+        {
+            switch (imageKey) {
+                case "1 Bolt":
+                    telemetry.addLine("Image 1");
+                    telemetry.update();
+                    sleep(2000);
+                    break;
+                case "2 Bulb":
+                    telemetry.addLine("Image 2");
+                    telemetry.update();
+                    sleep(2000);
+                    break;
+                case "3 Panel":
+                    telemetry.addLine("Image 3");
+                    telemetry.update();
+                    sleep(2000);
+                    break;
+            }
+        }
+
+        /*switch (imageKey) {
             case "1 Bolt":
 
-                telemetry.addLine("hhhhhhhhhhhh");
+                telemetry.addLine("Image 1");
+
                 telemetry.update();
                 sleep(1000);
                 // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -489,6 +507,9 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
 
 
             case "2 Bulb":
+
+                telemetry.addLine("Image 2");
+                telemetry.update();
         // Initialize the drive system variables.
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -533,6 +554,10 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
                 break;
 
             case "3 Panel":
+
+                telemetry.addLine("Image 3");
+                telemetry.update();
+
                 // Initialize the drive system variables.
 
 
@@ -578,7 +603,7 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
 
             default:
                 throw new IllegalStateException("Unexpected value: " + imageKey);
-        }
+        }*/
     }
 
 

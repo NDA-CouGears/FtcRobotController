@@ -1,6 +1,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -23,7 +24,7 @@ import java.util.List;
  * is explained below.
  */
 @TeleOp(name = "camera that works", group = "Concept")
-
+@Disabled
 public  class NewCameraPleaseWork extends LinearOpMode {
 
     /*
