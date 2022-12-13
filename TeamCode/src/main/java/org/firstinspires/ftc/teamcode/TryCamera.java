@@ -157,35 +157,10 @@ public class TryCamera extends LinearOpMode {
     private TFObjectDetector tfod;
 
     public String cameraResult() {
-        // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
-        // first.
-        initVuforia();
-        initTfod();
 
-        /**
-         * Activate TensorFlow Object Detection before we wait for the start command.
-         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
-         **/
-        if (tfod != null) {
-            tfod.activate();
-
-            // The TensorFlow software will scale the input images from the camera to a lower resolution.
-            // This can result in lower detection accuracy at longer distances (> 55cm or 22").
-            // If your target is at distance greater than 50 cm (20") you can increase the magnification value
-            // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
-            // should be set to the value of the images used to create the TensorFlow Object Detection model
-            // (typically 16/9).
-            tfod.setZoom(1.0, 16.0/9.0);
-        }
-
-        /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start op mode");
-        telemetry.update();
-        waitForStart();
         String image = "";
 
         if (opModeIsActive()) {
-            while (opModeIsActive()) {
                 if (tfod != null) {
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
@@ -210,7 +185,7 @@ public class TryCamera extends LinearOpMode {
                         telemetry.update();
                     }
                 }
-            }
+
         }
         return image;
     }
@@ -252,7 +227,23 @@ public class TryCamera extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        
+
+        initVuforia();
+        initTfod();
+
+        if (tfod != null) {
+            tfod.activate();
+
+            // The TensorFlow software will scale the input images from the camera to a lower resolution.
+            // This can result in lower detection accuracy at longer distances (> 55cm or 22").
+            // If your target is at distance greater than 50 cm (20") you can increase the magnification value
+            // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
+            // should be set to the value of the images used to create the TensorFlow Object Detection model
+            // (typically 16/9).
+            tfod.setZoom(1.0, 16.0/9.0);
+        }
+
+
         telemetry.update();
 
         DcMotor leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
@@ -261,8 +252,11 @@ public class TryCamera extends LinearOpMode {
         DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         telemetry.update();
         waitForStart();
-        String imageKey = cameraResult();
 
+        String imageKey = "";
+        while(imageKey == "" && opModeIsActive()) {
+            imageKey = cameraResult();
+        }
         /*while(true)
         {*/
             switch (imageKey) {
@@ -289,152 +283,6 @@ public class TryCamera extends LinearOpMode {
             }
        //   }
 
-        /*switch (imageKey) {
-            case "1 Bolt":
-
-                telemetry.addLine("Image 1");
-
-                telemetry.update();
-                sleep(1000);
-                // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-                // When run, this OpMode should start all four motors driving forward. So adjust these two lines based on your first test drive.
-                // LOOK INTO MECH WHEEL SPECIFIC DRIVES
-                leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-                leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-                rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-                rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-
-                leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                // Send telemetry message to indicate successful Encoder reset
-                telemetry.addData("Starting at", "%7d :%7d",
-                        leftFrontDrive.getCurrentPosition(),
-                        leftBackDrive.getCurrentPosition(),
-                        rightFrontDrive.getCurrentPosition(),
-                        rightBackDrive.getCurrentPosition());
-                telemetry.update();
-
-                // Wait for the game to start (driver presses PLAY)
-                waitForStart();
-
-                // Step through each leg of the path,
-                // Note: Reverse movement is obtained by setting a negative distance (not speed)
-                encoderDriveLeft(DRIVE_SPEED, 30, 30, 30, 30, 5.0, leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
-                encoderDriveLeft(DRIVE_SPEED, -26, 26, 26, -26, 4.0, leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
-
-
-                telemetry.addData("Path", "Complete");
-                telemetry.update();
-                sleep(1000);  // pause to display final telemetry message
-            break;
-
-
-            case "2 Bulb":
-
-                telemetry.addLine("Image 2");
-                telemetry.update();
-        // Initialize the drive system variables.
-
-        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-        // When run, this OpMode should start all four motors driving forward. So adjust these two lines based on your first test drive.
-        // LOOK INTO MECH WHEEL SPECIFIC DRIVES
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-
-        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Starting at",  "%7d :%7d",
-                leftFrontDrive.getCurrentPosition(),
-                leftBackDrive.getCurrentPosition(),
-                rightFrontDrive.getCurrentPosition(),
-                rightBackDrive.getCurrentPosition());
-        telemetry.update();
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDriveRight(DRIVE_SPEED,  30,  30, 30,30,5.0, leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDriveRight(DRIVE_SPEED,   26, -26, -26, 26,4.0, leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
-
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-        sleep(1000);  // pause to display final telemetry message.
-
-                break;
-
-            case "3 Panel":
-
-                telemetry.addLine("Image 3");
-                telemetry.update();
-
-                // Initialize the drive system variables.
-
-
-                // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-                // When run, this OpMode should start all four motors driving forward. So adjust these two lines based on your first test drive.
-                // LOOK INTO MECH WHEEL SPECIFIC DRIVES
-                leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-                leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-                rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-                rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
-
-                leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightBackDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-                leftFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightFrontDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightBackDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                // Send telemetry message to indicate successful Encoder reset
-                telemetry.addData("Starting at",  "%7d :%7d",
-                        leftFrontDrive.getCurrentPosition(),
-                        leftBackDrive.getCurrentPosition(),
-                        rightFrontDrive.getCurrentPosition(),
-                        rightBackDrive.getCurrentPosition());
-                telemetry.update();
-
-                // Wait for the game to start (driver presses PLAY)
-                waitForStart();
-
-                // Step through each leg of the path,
-                // Note: Reverse movement is obtained by setting a negative distance (not speed)
-                encoderDrive1(DRIVE_SPEED,  30,  30, 5.0, leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
-
-
-                telemetry.addData("Path", "Complete");
-                telemetry.update();
-                sleep(1000);  // pause to display final telemetry message.
-
-                break;
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + imageKey);
-        }*/
     }
 
 
