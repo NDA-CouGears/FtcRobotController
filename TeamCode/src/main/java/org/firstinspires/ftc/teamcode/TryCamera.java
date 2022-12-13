@@ -8,6 +8,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -86,7 +87,7 @@ public class TryCamera extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (leftFrontDrive.isBusy() && leftBackDrive.isBusy() && rightFrontDrive.isBusy() && rightBackDrive.isBusy())) {
+                    (leftFrontDrive.isBusy() || leftBackDrive.isBusy() || rightFrontDrive.isBusy() || rightBackDrive.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Running to", " %7d :%7d", newLeftFrontTarget, newLeftBackTarget, newRightFrontTarget, newRightBackTarget);
@@ -96,13 +97,13 @@ public class TryCamera extends LinearOpMode {
                 telemetry.update();
             }
 
-            /* Stop all motion;
+            // Stop all motion;
             leftFrontDrive.setPower(0);
             leftBackDrive.setPower(0);
             rightFrontDrive.setPower(0);
             rightBackDrive.setPower(0);
 
-             */
+
 
             telemetry.addData("Running to", " %7d :%7d", newLeftFrontTarget, newLeftBackTarget, newRightFrontTarget, newRightBackTarget);
             telemetry.update();
@@ -118,6 +119,7 @@ public class TryCamera extends LinearOpMode {
             sleep(250);   // optional pause after each move.
         }
     }
+
 
 
     private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
@@ -231,6 +233,9 @@ public class TryCamera extends LinearOpMode {
         initVuforia();
         initTfod();
 
+        telemetry.addData("hello", "");
+        telemetry.update();
+
         if (tfod != null) {
             tfod.activate();
 
@@ -251,6 +256,12 @@ public class TryCamera extends LinearOpMode {
         DcMotor rightFrontDrive  = hardwareMap.get(DcMotor.class, "right_front_drive");
         DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         telemetry.update();
+
+        leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightBackDrive.setDirection(DcMotor.Direction.REVERSE);
+
         waitForStart();
 
         String imageKey = "";
@@ -262,20 +273,20 @@ public class TryCamera extends LinearOpMode {
             switch (imageKey) {
                 case "1 Bolt":
                     telemetry.addLine("Image 1");
-                    encoderDrive(DRIVE_SPEED,  30,  30, 30,30,5.0, leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0, leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,   -26, 26, 26, -26,4.0,leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
                     telemetry.update();
                     sleep(2000);
                     break;
                 case "2 Bulb":
                     telemetry.addLine("Image 2");
-                    encoderDrive(DRIVE_SPEED,  30,  30, 30,30, 5.0, leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);
+                    encoderDrive(DRIVE_SPEED,  27,  27, 27,27, 5.0, leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);
                     telemetry.update();
                     sleep(2000);
                     break;
                 case "3 Panel":
                     telemetry.addLine("Image 3");
-                    encoderDrive(DRIVE_SPEED,  30,  30, 30,30,5.0,leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
+                    encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
                     encoderDrive(DRIVE_SPEED,   26, -26, -26, 26,4.0,leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
                     telemetry.update();
                     sleep(2000);

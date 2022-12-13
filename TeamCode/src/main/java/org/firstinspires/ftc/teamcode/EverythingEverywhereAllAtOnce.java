@@ -32,9 +32,6 @@ public class EverythingEverywhereAllAtOnce extends LinearOpMode {
 
 
     public void encoderDriveLeft(double speed, double leftFrontInches, double rightFrontInches, double leftBackInches, double rightBackInches, double timeoutS, DcMotor lfd, DcMotor lbd, DcMotor rfd, DcMotor rbd) {
-        telemetry.addLine("i hate myself");
-        telemetry.update();
-        sleep(100000);
         DcMotor leftFrontDrive  = lfd;
         DcMotor leftBackDrive = lbd;
         DcMotor rightFrontDrive  = rfd;
