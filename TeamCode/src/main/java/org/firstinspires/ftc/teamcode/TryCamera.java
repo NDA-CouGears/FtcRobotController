@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -29,8 +30,6 @@ public class TryCamera extends LinearOpMode {
     static final double COUNTS_PER_MOTOR_REV = 1440;
     static final double COUNTS_PER_MM = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_MM * 3.1415);
     private ElapsedTime runtime = new ElapsedTime();
-
-
 
     public void encoderDrive(double speed, int leftFrontInches, int rightFrontInches, int leftBackInches, int rightBackInches, double timeoutS, DcMotor lfd, DcMotor lbd, DcMotor rfd, DcMotor rbd) {
         telemetry.update();
@@ -255,6 +254,7 @@ public class TryCamera extends LinearOpMode {
         DcMotor leftBackDrive = hardwareMap.get(DcMotor.class, "left_back_drive");
         DcMotor rightFrontDrive  = hardwareMap.get(DcMotor.class, "right_front_drive");
         DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        Servo servo = hardwareMap.servo.get("servo");
         telemetry.update();
 
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -264,10 +264,13 @@ public class TryCamera extends LinearOpMode {
 
         waitForStart();
 
+        servo.setPosition(0.45);
+
         String imageKey = "";
         while(imageKey == "" && opModeIsActive()) {
             imageKey = cameraResult();
         }
+        servo.setPosition(0.31);
         /*while(true)
         {*/
             switch (imageKey) {
