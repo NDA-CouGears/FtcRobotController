@@ -115,13 +115,13 @@ public class CustomSleeve extends LinearOpMode {
 
 
 
-    private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
+    private static final String TFOD_MODEL_ASSET = "coloredshpes.tflite";
     // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
 
     private static final String[] LABELS = {
-            "1 Blue",
-            "2 Yellow",
-            "3 Red"
+            "1 RedCircle",
+            "2 GreenSquare",
+            "3 BlueTriangle"
     };
 
 
@@ -248,6 +248,7 @@ public class CustomSleeve extends LinearOpMode {
         DcMotor rightFrontDrive  = hardwareMap.get(DcMotor.class, "right_front_drive");
         DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
         Servo servo = hardwareMap.servo.get("servo");
+        Servo claw = hardwareMap.servo.get("servo3");
         telemetry.update();
 
         leftFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -267,7 +268,7 @@ public class CustomSleeve extends LinearOpMode {
         /*while(true)
         {*/
         switch (imageKey) {
-            case "1 Blue":
+            case "1 RedCircle":
                 telemetry.addLine("Image 1");
                 encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,
                         leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
@@ -276,14 +277,14 @@ public class CustomSleeve extends LinearOpMode {
                 telemetry.update();
                 sleep(2000);
                 break;
-            case "2 Yellow":
+            case "2 GreenSquare":
                 telemetry.addLine("Image 2");
                 encoderDrive(DRIVE_SPEED,  27,  27, 27,27, 5.0,
                         leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);
                 telemetry.update();
                 sleep(2000);
                 break;
-            case "3 Red":
+            case "3 BlueTriangle":
                 telemetry.addLine("Image 3");
                 encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,
                         leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
@@ -292,6 +293,14 @@ public class CustomSleeve extends LinearOpMode {
                 telemetry.update();
                 sleep(2000);
                 break;
+
+        }
+
+        for(int clap = 0; clap < 5; clap++) {
+            claw.setPosition(1);
+            sleep(500);
+            claw.setPosition(0);
+            sleep(500);
         }
         //   }
 

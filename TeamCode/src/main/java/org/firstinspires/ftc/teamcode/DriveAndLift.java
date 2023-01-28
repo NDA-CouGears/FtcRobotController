@@ -30,14 +30,14 @@ public class DriveAndLift extends LinearOpMode {
     static final double DRIVE_GEAR_REDUCTION = 1.0;
     static final double WHEEL_DIAMETER_MM = 37.0;
     static final double COUNTS_PER_MOTOR_REV = 1440;
-    static final double middleServo = 55;
-    static final double middleServo2= 30;
+    static final double middleServo = 58;
+    static final double middleServo2= 77;
     static final double topServo = 67;
-    static final double topServo2 = 57;
+    static final double topServo2 = 95;
     static final double servoMax = 69;
-    static final double servo2Max = 60;
+    static final double servo2Max = 95;
     static final double servoMin = 31;
-    static final double servo2Min = 3;
+    static final double servo2Min = 63;
 
     @Override
     public void runOpMode() {
@@ -57,6 +57,9 @@ public class DriveAndLift extends LinearOpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
+        // servo.setDirection(Servo.Direction.REVERSE);
+          servo2.setDirection(Servo.Direction.REVERSE);
+
         if (servo.getController() instanceof ServoControllerEx)
         {
             ServoControllerEx theControl = (ServoControllerEx) servo.getController();
@@ -73,7 +76,7 @@ public class DriveAndLift extends LinearOpMode {
             theControl.setServoPwmRange(portNum,range);
         }
         double curArmPosition = 31;
-        double curArmPosition2 = 3;
+        double curArmPosition2 = 63;
         boolean leftBumper = gamepad2.left_bumper;
         boolean rightBumper = gamepad2.right_bumper;
 
@@ -111,6 +114,17 @@ public class DriveAndLift extends LinearOpMode {
                 curArmPosition2 -= 7.5;
                 sleep(1000);
                 claw.setPosition(1);
+            }
+
+            if(gamepad2.dpad_down)
+            {
+                for(int clap = 0; clap < 5; clap++) {
+                    claw.setPosition(1);
+                    sleep(500);
+                    claw.setPosition(0);
+                    sleep(500);
+                }
+
             }
 
             curArmPosition2 += deltaY2*0.1;
