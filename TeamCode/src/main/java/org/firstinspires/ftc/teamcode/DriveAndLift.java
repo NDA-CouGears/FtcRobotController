@@ -80,7 +80,7 @@ public class DriveAndLift extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double y = gamepad1.left_stick_y; // Remember, this is reversed!
+            double y = gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x * -1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
             double deltaY = -gamepad2.left_stick_y;

@@ -1,14 +1,8 @@
-// author: delia jasper
-// purpose: combining the programs into one
-
-
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -20,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name = "Try Camera")
-public class TryCamera extends LinearOpMode {
+@Autonomous(name = "Custom Sleeve Auto")
+public class CustomSleeve extends LinearOpMode {
 
     static final double DRIVE_SPEED = 0.6;
     static final double TURN_SPEED = 0.5;
@@ -125,9 +119,9 @@ public class TryCamera extends LinearOpMode {
     // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
 
     private static final String[] LABELS = {
-            "1 Bolt",
-            "2 Bulb",
-            "3 Panel"
+            "1 Blue",
+            "2 Yellow",
+            "3 Red"
     };
 
 
@@ -161,30 +155,30 @@ public class TryCamera extends LinearOpMode {
 
         String image = "";
         if (opModeIsActive()) {
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+            if (tfod != null) {
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
 
-                    if (updatedRecognitions != null) {
-                        telemetry.addData("# Objects Detected", updatedRecognitions.size());
-                        // step through the list of recognitions and display image position/size information for each one
-                        // Note: "Image number" refers to the randomized image orientation/number
-                        for (Recognition recognition : updatedRecognitions) {
-                            double col = (recognition.getLeft() + recognition.getRight()) / 2 ;
-                            double row = (recognition.getTop()  + recognition.getBottom()) / 2 ;
-                            double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
-                            double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Objects Detected", updatedRecognitions.size());
+                    // step through the list of recognitions and display image position/size information for each one
+                    // Note: "Image number" refers to the randomized image orientation/number
+                    for (Recognition recognition : updatedRecognitions) {
+                        double col = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                        double row = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                        double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
+                        double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
 
-                            telemetry.addData(""," ");
-                            telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
-                            telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
-                            telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
-                            image = recognition.getLabel();
-                        }
-                        telemetry.update();
+                        telemetry.addData(""," ");
+                        telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
+                        telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
+                        telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
+                        image = recognition.getLabel();
                     }
+                    telemetry.update();
                 }
+            }
 
         }
         return image;
@@ -272,36 +266,34 @@ public class TryCamera extends LinearOpMode {
         servo.setPosition(0.31);
         /*while(true)
         {*/
-            switch (imageKey) {
-                case "1 Bolt":
-                    telemetry.addLine("Image 1");
-                    encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,
-                            leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED,   -26, 26, 26, -26,4.0,
-                            leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
-                    telemetry.update();
-                    sleep(2000);
-                    break;
-                case "2 Bulb":
-                    telemetry.addLine("Image 2");
-                    encoderDrive(DRIVE_SPEED,  27,  27, 27,27, 5.0,
-                            leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);
-                    telemetry.update();
-                    sleep(2000);
-                    break;
-                case "3 Panel":
-                    telemetry.addLine("Image 3");
-                    encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,
-                            leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
-                    encoderDrive(DRIVE_SPEED,   26, -26, -26, 26,4.0,
-                            leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
-                    telemetry.update();
-                    sleep(2000);
-                    break;
-            }
-       //   }
+        switch (imageKey) {
+            case "1 Blue":
+                telemetry.addLine("Image 1");
+                encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,
+                        leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED,   -26, 26, 26, -26,4.0,
+                        leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                telemetry.update();
+                sleep(2000);
+                break;
+            case "2 Yellow":
+                telemetry.addLine("Image 2");
+                encoderDrive(DRIVE_SPEED,  27,  27, 27,27, 5.0,
+                        leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);
+                telemetry.update();
+                sleep(2000);
+                break;
+            case "3 Red":
+                telemetry.addLine("Image 3");
+                encoderDrive(DRIVE_SPEED,  27,  27, 27,27,5.0,
+                        leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S1: Forward 47 Inches with 5 Sec timeout
+                encoderDrive(DRIVE_SPEED,   26, -26, -26, 26,4.0,
+                        leftFrontDrive,leftBackDrive,rightFrontDrive, rightBackDrive);  // S2: Turn Right 12 Inches with 4 Sec timeout
+                telemetry.update();
+                sleep(2000);
+                break;
+        }
+        //   }
 
     }
-
-
 }
