@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-@TeleOp(name="Drive and Lift", group="TeleOp")
+@TeleOp(name="Drive and Lift2", group="TeleOp")
 public class DriveAndLift extends LinearOpMode {
 
     // initialize narrators
@@ -33,9 +33,9 @@ public class DriveAndLift extends LinearOpMode {
     static final double middleServo = 58;
     static final double middleServo2= 77;
     static final double topServo = 67;
-    static final double topServo2 = 95;
+    static final double topServo2 = 96;
     static final double servoMax = 69;
-    static final double servo2Max = 95;
+    static final double servo2Max = 96;
     static final double servoMin = 31;
     static final double servo2Min = 63;
 
