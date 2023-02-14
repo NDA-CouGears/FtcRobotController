@@ -115,7 +115,7 @@ public class CustomSleeve extends LinearOpMode {
 
 
 
-    private static final String TFOD_MODEL_ASSET = "coloredshpes.tflite";
+    private static final String TFOD_MODEL_ASSET = "coloredshpesV4.tflite";
     // private static final String TFOD_MODEL_FILE  = "/sdcard/FIRST/tflitemodels/CustomTeamModel.tflite";
 
     private static final String[] LABELS = {
@@ -164,7 +164,6 @@ public class CustomSleeve extends LinearOpMode {
                     telemetry.addData("# Objects Detected", updatedRecognitions.size());
                     // step through the list of recognitions and display image position/size information for each one
                     // Note: "Image number" refers to the randomized image orientation/number
-                    image = updatedRecognitions.get(updatedRecognitions.size()).getLabel();
 
                     for (Recognition recognition : updatedRecognitions) {
                         double col = (recognition.getLeft() + recognition.getRight()) / 2 ;
