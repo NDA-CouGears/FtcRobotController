@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 
-@TeleOp(name="Drive and Lift2", group="TeleOp")
+@TeleOp(name="Drive and Lift", group="TeleOp")
 public class DriveAndLift extends LinearOpMode {
 
     // initialize narrators
@@ -38,6 +38,8 @@ public class DriveAndLift extends LinearOpMode {
     static final double servo2Max = 96;
     static final double servoMin = 31;
     static final double servo2Min = 63;
+    static final double openClaw = 0.55;
+    static final double closedClaw = 0.5;
 
     @Override
     public void runOpMode() {
@@ -105,7 +107,7 @@ public class DriveAndLift extends LinearOpMode {
             {
                 curArmPosition = servoMin;
                 curArmPosition2 = servo2Min;
-                claw.setPosition(1);
+                claw.setPosition(openClaw);
             }
 
             if (gamepad2.x)
@@ -113,15 +115,15 @@ public class DriveAndLift extends LinearOpMode {
                 curArmPosition -= 7.5;
                 curArmPosition2 -= 7.5;
                 sleep(1000);
-                claw.setPosition(1);
+                claw.setPosition(openClaw);
             }
 
             if(gamepad2.dpad_down)
             {
                 for(int clap = 0; clap < 5; clap++) {
-                    claw.setPosition(1);
+                    claw.setPosition(openClaw);
                     sleep(500);
-                    claw.setPosition(0);
+                    claw.setPosition(closedClaw);
                     sleep(500);
                 }
 
@@ -148,11 +150,11 @@ public class DriveAndLift extends LinearOpMode {
             servo2.setPosition(curArmPosition2/100);
 
             if (gamepad2.left_bumper) {
-                claw.setPosition(1);
+                claw.setPosition(openClaw);
             }
 
             if (gamepad2.right_bumper) {
-                claw.setPosition(0);
+                claw.setPosition(closedClaw);
             }
 
             // Wait for the game to start (driver presses PLAY)
